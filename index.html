@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <!-- font awesome 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </head>
+  <body>
+  
+    <div class="row" style="width:100%;text-align: center;">
+      <div class="col-6 compra">
+        <p class="tipocambio"> TC Compra: <u class="respuesta" id="tipocambioCompra"></u></p>
+      </div>
+      <div class="col-6 venta">
+        <p class="tipocambio"> TC Venta: <u class="respuesta" id="tipocambioVenta"></u></p>
+      </div>
+        
+    </div>
+
+  </body>
+  <style>
+    .compra{
+    background: rgb(29, 99, 255);
+    color: white;
+    border-radius:5px; 
+  }
+  .tipocambio{
+    padding-top: 10px;
+    text-decoration:none;
+    font-family: Albert Sans,sans-serif;
+  }
+  .respuesta{
+    text-decoration:none;
+    font-weight: 700;
+    font-family: Albert Sans,sans-serif;
+  }
+  </style>
+  <script>
+var data;
+  fetch('https://api.kambista.com/v1/exchange/calculates?originCurrency=USD&destinationCurrency=PEN&amount=100&active=S')
+  .then(res => { 
+    return res.json();
+    console.log(res);
+  })
+  .then(res => {
+    console.log(res); 
+    data = res;
+    document.getElementById('tipocambioCompra').innerHTML=data.tc.bid; 
+    document.getElementById('tipocambioVenta').innerHTML=data.tc.ask;
+  })
+  .catch(error => console.error('Error:', error));
+  setInterval("location.reload()",60000);
+  </script>
+</html>
